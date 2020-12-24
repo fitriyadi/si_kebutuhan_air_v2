@@ -36,6 +36,24 @@
 								<option value="4">Desember II</option>
 								<option value="5">Januari I</option>
 								<option value="6">Januari II</option>
+								<option value="7">Febrari I</option>
+								<option value="8">Februari II</option>
+								<option value="9">Maret I</option>
+								<option value="10">Maret II</option>
+								<option value="11">April  I</option>
+								<option value="12">April II</option>
+								<option value="13">Mei I</option>
+								<option value="13">Mei II</option>
+								<option value="15">Juni I</option>
+								<option value="16">Juni II</option>
+								<option value="17">Juli I</option>
+								<option value="18">Juli II</option>
+								<option value="19">Agustus I</option>
+								<option value="20">Agustus II</option>
+								<option value="21">September I</option>
+								<option value="22">September II</option>
+								<option value="23">Oktober I</option>
+								<option value="24">Oktober II</option>
 							</select>
 						</div>
 					</div>

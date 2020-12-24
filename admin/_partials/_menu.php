@@ -27,6 +27,10 @@
         </li>
 
         <li class="nav-item">
+          <a href="?hal=tanaman/koefisien" class="nav-link">Koefisien Tanaman</a>
+        </li>
+
+        <li class="nav-item">
           <a href="?hal=tanaman/olah_analisis" class="nav-link">Setting Persiapan</a>
         </li>
 

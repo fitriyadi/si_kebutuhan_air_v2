@@ -1,13 +1,7 @@
 <?php
-$KOEFISIEN_PADI=array();
-$KOEFISIEN_PAlAWIJA=array();
 $idgolongan=$_GET['id'];
 
-for ($i=1;$i<=24;$i++) { 
-	$KOEFISIEN_PADI[$i]=caridata($mysqli,"select koefisien from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and jenis='Padi'");
-	$KOEFISIEN_PAlAWIJA[$i]=caridata($mysqli,"select koefisien from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and jenis='Palawija'");
-	$PERSIAPAN[$i]=caridata($mysqli,"select status from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and jenis='Padi'");
-}
+
 ?>
 <nav class="page-breadcrumb">
 	<ol class="breadcrumb">
@@ -41,33 +35,76 @@ for ($i=1;$i<=24;$i++) {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Padi</td>
-								<?php for ($i=1;$i<=24;$i++) { 
-									if($PERSIAPAN[$i]=='Persiapan'){
-										echo "<td><span class='badge badge-primary'>Persiapan</span></td>";
-									}else{
-									?>
-									<td><?=$KOEFISIEN_PADI[$i]?></td>
-								<?php }}?>
-							</tr>
-							<tr>
-								<td>palawija</td>
-								<?php for ($i=1;$i<=24;$i++) { 
-									if($PERSIAPAN[$i]=='Persiapan'){
-										echo "<td><span class='badge badge-primary'>Persiapan</span></td>";
-									}else{
-									?>
-									<td><?=$KOEFISIEN_PAlAWIJA[$i]?></td>
-								<?php }}?>
-							</tr>
+							<?php
+							$sql="SELECT * FROM tb_tanaman";
+							foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
+								extract($value);
+								$KOF=lihatnilai($mysqli,$idtanaman,$idgolongan);
+								$PER=lihatper($mysqli,$idtanaman,$idgolongan);;
+								?>
+								<tr>
+									<td><?=$nama?></td>
+									<?php for ($i=1;$i<=24;$i++) { 
+										if(@$PER[$i]=='Persiapan'){
+											echo "<td><span class='badge badge-primary'>Persiapan</span></td>";
+										}else{
+											?>
+											<td><?=@$KOF[$i]?></td>
+										<?php }}?>
+									</tr>
+								<?php } ?>
 
-						</tbody>
-					</table>
+							</tbody>
+						</table>
 
-					<?=_edit("?hal=jadwal/olah&id=$idgolongan")?>
+						<?=_edit("?hal=jadwal/input&id=$idgolongan")?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+
+
+	<?php
+
+	function lihatnilai($mysqli,$idtanaman,$idgolongan){
+		$nilai=array();
+		$no=0;
+		$sql="SELECT * FROM tb_jadwal_tanam where idtanaman='$idtanaman' and idgolongan='$idgolongan' order by bulan asc";
+		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
+			extract($value);
+			$nilai[$no+=1]=$koefisien;
+		}
+
+		return $nilai;
+	}
+
+	function lihatper($mysqli,$idtanaman,$idgolongan){
+		$nilai=array();
+		$no=0;
+		$sql="SELECT * FROM tb_jadwal_tanam where idtanaman='$idtanaman' and idgolongan='$idgolongan' order by bulan asc";
+		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
+			extract($value);
+			$nilai[$no+=1]=$status;
+		}
+
+		return $nilai;
+	}
+
+
+	// }
+
+	// function lihatpersiapan($mysqli,$idtanaman,$bulan,$idgolongan){
+
+	// }
+
+
+	// function lihatnilai($mysqli,$idtanaman,$minggu){
+	// 	@$nilai=caridata($mysqli,"select nilai from tb_koefisien where idtanaman='$idtanaman' and minggu='$minggu'");
+
+	// 	if($nilai==null){
+	// 		$nilai="";
+	// 	}
+	// 	return $nilai;
+	// }
+	?>

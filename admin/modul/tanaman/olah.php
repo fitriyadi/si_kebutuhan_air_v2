@@ -14,7 +14,7 @@ if(isset($_GET['id']))
 	<div class="col-md-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-				<h6 class="card-title"><?=(isset($_GET['id']) ? 'Ubah':'Tambah')?> Data Kelompok</h6>
+				<h6 class="card-title"><?=(isset($_GET['id']) ? 'Ubah':'Tambah')?> Data Tanaman</h6>
 
 				<form class="forms-sample" action="?hal=tanaman/proses" method="POST">
 					

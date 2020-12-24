@@ -26,14 +26,15 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	extract($value);
 
 	$efisiensigolongan=$efisiensi;
-	$bulanawal=caridata($mysqli,"SELECT bulan FROM tb_jadwal_tanam WHERE STATUS='Persiapan' AND idgolongan='$idgolongan' AND jenis='Palawija' LIMIT 1");
+	$bulanawal=caridata($mysqli,"SELECT bulan FROM tb_jadwal_tanam WHERE STATUS='Persiapan' AND idgolongan='$idgolongan' AND idtanaman='$idpalawija' LIMIT 1");
 	$pergantian_lapisan_air=array();
 	$pergantian_lapisan_air=k_pergantian_air($bulanawal);
 
 
 	for ($i=1;$i<=24;$i++) { 
-		$KC[$i]=caridata($mysqli,"select koefisien from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and jenis='Palawija'");
-		$PERSIAPAN[$i]=caridata($mysqli,"select status from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and jenis='Palawija'");
+		$KC[$i]=caridata($mysqli,"select koefisien from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and idtanaman='$idpalawija'");
+		
+		$PERSIAPAN[$i]=caridata($mysqli,"select status from tb_jadwal_tanam where bulan='$i' and idgolongan='$idgolongan' and idtanaman='$idpalawija'");
 	}
 
 	?>
@@ -163,7 +164,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 									</tr>
 									<tr>
 										<td colspan="3">Keterangan</td>
-										<?php $ket=keterangan($mysqli,"Palawija",$idgolongan);for ($i=1;$i<=24;$i++) {?>
+										<?php $ket=keterangan($mysqli,$idpalawija,$idgolongan);for ($i=1;$i<=24;$i++) {?>
 											<td><?=warna($ket[$i])?></td>
 											<?php 
 
@@ -181,10 +182,10 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	<?php } ?>
 
 	<?php
-	function keterangan($mysqli,$jenis,$idgolongan){
+	function keterangan($mysqli,$idtanaman,$idgolongan){
 		$data=array();
 		$no=0;
-		$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND jenis='$jenis' ORDER BY bulan";
+		$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND idtanaman='$idtanaman' ORDER BY bulan";
 		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 			extract($value);
 			$data[$no+=1]=$ket;
@@ -215,9 +216,9 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	}
 
 	function warna($data){
-		if($data=="MT1")
+		if($data=="mt1")
 			return "<span class='badge badge-primary'>MT1</span>";
-		if($data=="MT2")
+		if($data=="mt2")
 			return "<span class='badge badge-success'>MT2</span>";
 		else
 			return "<span class='badge badge-warning'>MT3</span>";

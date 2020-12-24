@@ -25,8 +25,6 @@ mysqli_query($mysqli,"truncate table tb_grafik");
 for ($i=1;$i<=24;$i++) { 
 	$hasilnilai[$i]=0;
 }
-
-
 ?>
 
 <nav class="page-breadcrumb">
@@ -42,8 +40,8 @@ for ($i=1;$i<=24;$i++) {
 		<div class="card">
 			<div class="card-body">
 				<h4>Pola Tanam</h4>
-				<h6>Masa Tanam 1 (MT1) : <?=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt1']."'")?> </h6>
-				<h6>Masa Tanam 2 (MT2) : <?=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt2']."'")?> </h6>
+				<h6>Masa Tanam 1 (mt1) : <?=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt1']."'")?> </h6>
+				<h6>Masa Tanam 2 (mt2) : <?=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt2']."'")?> </h6>
 				<h6>Masa Tanam 3 (MT3) : <?=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt3']."'")?> </h6>
 			</div>
 		</div>
@@ -84,12 +82,12 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 							
 							<tbody>
 								<?php
-								$ket=keterangan($mysqli,"Padi",$idgolongan);
+								$ket=keterangan($mysqli,$mt1,$idgolongan);
 								for ($i=1;$i<=24;$i++) { 
-									if($ket[$i]=='MT1'){
+									if($ket[$i]=='mt1'){
 										$jenismt[$i]=$mt1;
 										$luasoptimum[$i]=$luas1;
-									}elseif ($ket[$i]=='MT2') {
+									}elseif ($ket[$i]=='mt2') {
 										$jenismt[$i]=$mt2;
 										$luasoptimum[$i]=$luas2;
 									}else{
@@ -254,7 +252,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	function keterangan($mysqli,$jenis,$idgolongan){
 		$data=array();
 		$no=0;
-		$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND jenis='$jenis' ORDER BY bulan";
+		$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND idtanaman='$jenis' ORDER BY bulan";
 		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 			extract($value);
 			$data[$no+=1]=$ket;
@@ -297,10 +295,10 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	}
 
 	function warna($data){
-		if($data=="MT1")
-			return "<span class='badge badge-primary'>MT1</span>";
-		if($data=="MT2")
-			return "<span class='badge badge-success'>MT2</span>";
+		if($data=="mt1")
+			return "<span class='badge badge-primary'>mt1</span>";
+		if($data=="mt2")
+			return "<span class='badge badge-success'>mt2</span>";
 		else
 			return "<span class='badge badge-warning'>MT3</span>";
 	}

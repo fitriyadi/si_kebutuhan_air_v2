@@ -67,8 +67,15 @@ function CekExist($conn,$qry){
 
 }
 function caridata($conn,$qry){
+  $x="";
   $row = $conn->query("$qry")->fetch_array();
-  return $row[0];
+  $x=$row[0];
+
+  if($x==""){
+    return "";
+  }else{
+    return $x;
+  }
 }
 
 
