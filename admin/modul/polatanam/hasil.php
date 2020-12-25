@@ -196,7 +196,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 		<div class="col-md-12 grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
-					<h6 class="card-title">Optimasi</h6>
+					<h6 class="card-title">Luas Tanam Optimum</h6>
 
 					<form class="forms-sample" action="?hal=polatanam/hasil" method="POST">
 						<input type="hidden" name="mt1" value="<?=$_POST['mt1']?>">
@@ -210,7 +210,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 						?>
 
 						<div class="form-group row">
-							<label for="input" class="col-sm-3 col-form-label"><?=$namamt1?> [Masta Tanam 1]</label>
+							<label for="input" class="col-sm-3 col-form-label"><?=$namamt1?> [Masa Tanam 1]</label>
 							<div class="col-sm-9">
 								<input type="" name="luas1" class="form-control" value="<?=$luas1?>">
 							</div>
@@ -296,9 +296,9 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 
 	function warna($data){
 		if($data=="mt1")
-			return "<span class='badge badge-primary'>mt1</span>";
+			return "<span class='badge badge-primary'>MT1</span>";
 		if($data=="mt2")
-			return "<span class='badge badge-success'>mt2</span>";
+			return "<span class='badge badge-success'>MT2</span>";
 		else
 			return "<span class='badge badge-warning'>MT3</span>";
 	}
