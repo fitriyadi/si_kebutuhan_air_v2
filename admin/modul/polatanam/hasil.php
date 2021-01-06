@@ -19,6 +19,11 @@ if (isset($_POST['optimal'])){
 	
 }
 
+//Luas Jumlah
+for ($i=1;$i<=3;$i++) { 
+	$jumlahluas[$i]=0;
+}
+
 //Hapus Grafik
 mysqli_query($mysqli,"truncate table tb_grafik");
 
@@ -50,6 +55,7 @@ for ($i=1;$i<=24;$i++) {
 
 <?php
 $sql="SELECT * FROM tb_golongan";
+$z=1;
 foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 	extract($value);
 	?>
@@ -68,7 +74,6 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 								<tr>
 									<td rowspan="2">Nama Saluran</td>
 									<td rowspan="2">Luas (Ha)</td>
-									<td rowspan="2">Luas Max (Ha)</td>
 									<?php foreach ($_BULAN as $key => $value) { ?>
 										<td colspan="2"><?=$value?></td>
 									<?php } ?>
@@ -102,8 +107,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 									?>
 									<tr>
 										<td><?=$value['nama']?></td>
-										<td><?=$value['luas']?></td>
-										<td><?=$value['luas']?></td>
+										<td><?=$value['luas'];$jumlahluas[$z]+=$value['luas'];?></td>
 										<?php for ($i=1;$i<=24;$i++) {
 											$luasx=$value['luas']*($luasoptimum[$i]/100);
 
@@ -130,7 +134,7 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php $z+=1;} ?>
 
 <div class="row">
 	<div class="col-md-12 grid-margin stretch-card">
@@ -211,22 +215,46 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 
 						<div class="form-group row">
 							<label for="input" class="col-sm-3 col-form-label"><?=$namamt1?> [Masa Tanam 1]</label>
-							<div class="col-sm-9">
-								<input type="" name="luas1" class="form-control" value="<?=$luas1?>">
+							<div class="col-sm-3">
+								<input type="number" max="100" name="luas1" class="form-control" value="<?=$luas1?>" >
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[1]?> Ha]" readonly>
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[1]*($luas1/100)?> Ha]" readonly>
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label for="input" class="col-sm-3 col-form-label"><?=$namamt2?> [Masa Tanam 2]</label>
-							<div class="col-sm-9">
-								<input type="" name="luas2" class="form-control" value="<?=$luas2?>">
+							<div class="col-sm-3">
+								<input type="number" max="100" name="luas2" class="form-control" value="<?=$luas2?>">
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[2]?> Ha]" readonly>
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[2]*($luas2/100)?> Ha]" readonly>
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label for="input" class="col-sm-3 col-form-label"><?=$namamt3?> [Masa Tanam 3]</label>
-							<div class="col-sm-9">
-								<input type="" name="luas3" class="form-control" value="<?=$luas3?>">
+							<div class="col-sm-3">
+								<input type="number" max="100" name="luas3" class="form-control" value="<?=$luas3?>">
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[3]?> Ha]" readonly>
+							</div>
+
+							<div class="col-sm-3">
+								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[3]*($luas3/100)?> Ha]" readonly>
 							</div>
 						</div>
 

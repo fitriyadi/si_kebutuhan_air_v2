@@ -47,7 +47,7 @@ session_start();
     <div class="page-wrapper">
 
       <!-- partial:../../partials/_navbar.html -->
-      <? require_once '_partials/_header.php'; ?>
+      <?php require_once '_partials/_header.php'; ?>
       <!-- partial -->
 
       <div class="page-content">
@@ -76,7 +76,7 @@ session_start();
 
       <!-- partial:../../partials/_footer.html -->
       <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between">
-       <? require_once '_partials/_footer.php'; ?>
+       <?php require_once '_partials/_footer.php'; ?>
      </footer>
      <!-- partial -->
 
@@ -84,7 +84,7 @@ session_start();
  </div>
 
  <!-- core:js -->
- <? require_once '_partials/_js.php'; ?>
+ <?php require_once '_partials/_js.php'; ?>
  <!-- end custom js for this page -->
 </body>
 </html>
