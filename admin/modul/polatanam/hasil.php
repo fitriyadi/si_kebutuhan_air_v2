@@ -134,205 +134,215 @@ foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
 			</div>
 		</div>
 	</div>
-<?php $z+=1;} ?>
-
-<div class="row">
-	<div class="col-md-12 grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body">
-				<h6 class="card-title">Rekapitulasi</h6>
-				<div class="table-responsive">
-					<table id="" class="table">
-						<thead>
-							<tr>
-								<td rowspan="2">DATA</td>
-								<td rowspan="2">Satuan</td>
-								<?php foreach ($_BULAN as $key => $value) { ?>
-									<td colspan="2"><?=$value?></td>
-								<?php } ?>
-							</tr>
-							<tr>
-								<?php for ($i=1;$i<=24;$i++) { ?>
-									<td><?=$_MINGGU[$i]?></td>
-								<?php } ?>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>TOTAL KEBUTUHAN</th>
-								<th>m3/s</th>
-								<?php for ($i=1;$i<=24;$i++) { ?>
-									<td><?=$hasilnilai[$i]?></td>
-								<?php } ?>
-							</tr>
-							<tr>
-								<th>KETERSEDIAAN</th>
-								<th>m3/s</th>
-								<?php 
-								$dataketersediaan=ketersediaan($mysqli);
-								?>
-								<?php for ($i=1;$i<=24;$i++) { ?>
-									<td><?=$dataketersediaan[$i]?></td>
-								<?php } ?>
-							</tr>
-							<tr>
-								<th>KETERANGAN</th>
-								<th>m3/s</th>
-								<?php for ($i=1;$i<=24;$i++) { 
-									tambah($mysqli,$i,number_format($hasilnilai[$i],2),$dataketersediaan[$i]);
-									if($dataketersediaan[$i]>=$hasilnilai[$i]){
-										echo "<td><btn class='btn btn-sm btn-success'>OK</btn></td>";
-									}else{
-										echo "<td><btn class='btn btn-sm btn-danger'>Belum</btn></td>";
-									}} ?>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<?php include 'modul/polatanam/grafik.php' ?>
+	<?php $z+=1;} ?>
 
 	<div class="row">
 		<div class="col-md-12 grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
-					<h6 class="card-title">Luas Tanam Optimum</h6>
-
-					<form class="forms-sample" action="?hal=polatanam/hasil" method="POST">
-						<input type="hidden" name="mt1" value="<?=$_POST['mt1']?>">
-						<input type="hidden" name="mt2" value="<?=$_POST['mt2']?>">
-						<input type="hidden" name="mt3" value="<?=$_POST['mt3']?>">
-
-						<?php
-						$namamt1=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt1']."'");
-						$namamt2=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt2']."'");
-						$namamt3=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt3']."'");
-						?>
-
-						<div class="form-group row">
-							<label for="input" class="col-sm-3 col-form-label"><?=$namamt1?> [Masa Tanam 1]</label>
-							<div class="col-sm-3">
-								<input type="number" max="100" name="luas1" class="form-control" value="<?=$luas1?>" >
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[1]?> Ha]" readonly>
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[1]*($luas1/100)?> Ha]" readonly>
-							</div>
+					<h6 class="card-title">Rekapitulasi</h6>
+					<div class="table-responsive">
+						<table id="" class="table">
+							<thead>
+								<tr>
+									<td rowspan="2">DATA</td>
+									<td rowspan="2">Satuan</td>
+									<?php foreach ($_BULAN as $key => $value) { ?>
+										<td colspan="2"><?=$value?></td>
+									<?php } ?>
+								</tr>
+								<tr>
+									<?php for ($i=1;$i<=24;$i++) { ?>
+										<td><?=$_MINGGU[$i]?></td>
+									<?php } ?>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>TOTAL KEBUTUHAN</th>
+									<th>m3/s</th>
+									<?php for ($i=1;$i<=24;$i++) { ?>
+										<td><?=$hasilnilai[$i]?></td>
+									<?php } ?>
+								</tr>
+								<tr>
+									<th>KETERSEDIAAN</th>
+									<th>m3/s</th>
+									<?php 
+									$dataketersediaan=ketersediaan($mysqli);
+									?>
+									<?php for ($i=1;$i<=24;$i++) { ?>
+										<td><?=$dataketersediaan[$i]?></td>
+									<?php } ?>
+								</tr>
+								<tr>
+									<th>KETERANGAN</th>
+									<th></th>
+									<?php for ($i=1;$i<=24;$i++) { 
+										tambah($mysqli,$i,number_format($hasilnilai[$i],2),$dataketersediaan[$i]);
+										if($dataketersediaan[$i]>=$hasilnilai[$i]){
+											echo "<td><btn class='btn btn-sm btn-success'>OK</btn></td>";
+										}else{
+											echo "<td><btn class='btn btn-sm btn-danger'>Belum</btn></td>";
+										}} ?>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-
-						<div class="form-group row">
-							<label for="input" class="col-sm-3 col-form-label"><?=$namamt2?> [Masa Tanam 2]</label>
-							<div class="col-sm-3">
-								<input type="number" max="100" name="luas2" class="form-control" value="<?=$luas2?>">
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[2]?> Ha]" readonly>
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[2]*($luas2/100)?> Ha]" readonly>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="input" class="col-sm-3 col-form-label"><?=$namamt3?> [Masa Tanam 3]</label>
-							<div class="col-sm-3">
-								<input type="number" max="100" name="luas3" class="form-control" value="<?=$luas3?>">
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[3]?> Ha]" readonly>
-							</div>
-
-							<div class="col-sm-3">
-								<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[3]*($luas3/100)?> Ha]" readonly>
-							</div>
-						</div>
-
-
-						<div class="form-group row ">
-							<div class="col-sm-9 offset-3">
-								<button type="submit" name="optimal" class="btn btn-primary mr-2" name="pola">Lihat</button>
-								<a class="btn btn-light" href="?hal=dashboard">Batal</a>
-							</div>
-						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+		<?php include 'modul/polatanam/grafik.php' ?>
+
+		<div class="row">
+			<div class="col-md-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+						<h6 class="card-title">Luas Tanam Optimum</h6>
+
+						<form class="forms-sample" action="?hal=polatanam/hasil" method="POST">
+							<input type="hidden" name="mt1" value="<?=$_POST['mt1']?>">
+							<input type="hidden" name="mt2" value="<?=$_POST['mt2']?>">
+							<input type="hidden" name="mt3" value="<?=$_POST['mt3']?>">
+
+							<?php
+							$namamt1=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt1']."'");
+							$namamt2=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt2']."'");
+							$namamt3=caridata($mysqli,"select nama from tb_tanaman where idtanaman='".$_POST['mt3']."'");
+							?>
+
+							<div class="form-group row">
+								<label for="input" class="col-sm-3 col-form-label"><?=$namamt1?> [Masa Tanam 1]</label>
+								<div class="col-sm-3">
+									<input type="number" max="100" name="luas1" class="form-control" value="<?=$luas1?>" >
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[1]?> Ha]" readonly>
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[1]*($luas1/100)?> Ha]" readonly>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="input" class="col-sm-3 col-form-label"><?=$namamt2?> [Masa Tanam 2]</label>
+								<div class="col-sm-3">
+									<input type="number" max="100" name="luas2" class="form-control" value="<?=$luas2?>">
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[2]?> Ha]" readonly>
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[2]*($luas2/100)?> Ha]" readonly>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="input" class="col-sm-3 col-form-label"><?=$namamt3?> [Masa Tanam 3]</label>
+								<div class="col-sm-3">
+									<input type="number" max="100" name="luas3" class="form-control" value="<?=$luas3?>">
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Baku [<?=$jumlahluas[3]?> Ha]" readonly>
+								</div>
+
+								<div class="col-sm-3">
+									<input type="" name="" class="form-control" value="Luas Maksimum [<?=$jumlahluas[3]*($luas3/100)?> Ha]" readonly>
+								</div>
+							</div>
+							
+							<?php
+								$total=$jumlahluas[1]+$jumlahluas[2]+$jumlahluas[3];
+								$maksimum=($jumlahluas[1]*($luas1/100)) + ($jumlahluas[2]*($luas2/100)) + ($jumlahluas[3]*($luas3/100));
+							?>
+							<div class="form-group row">
+								<label for="input" class="col-sm-6 col-form-label">Informasi Total</label>
+								<label for="input" class="col-sm-3 col-form-label"><b>Luas Total [<?=$total?> Ha] </b></label>
+								<label for="input" class="col-sm-3 col-form-label"><b>Luas Maksimum [<?=$maksimum?> Ha]</b></label>
+							</div>
 
 
-	<?php
+							<div class="form-group row ">
+								<div class="col-sm-9 offset-3">
+									<button type="submit" name="optimal" class="btn btn-primary mr-2" name="pola">Lihat</button>
+									<a class="btn btn-light" href="?hal=dashboard">Batal</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<?php
 // echo "<pre>";
 // print_r($hasilnilai);
 // echo "</pre>";
 
-	function keterangan($mysqli,$jenis,$idgolongan){
-		$data=array();
-		$no=0;
-		$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND idtanaman='$jenis' ORDER BY bulan";
-		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
-			extract($value);
-			$data[$no+=1]=$ket;
+		function keterangan($mysqli,$jenis,$idgolongan){
+			$data=array();
+			$no=0;
+			$sql="SELECT bulan,ket FROM tb_jadwal_tanam WHERE idgolongan='$idgolongan' AND idtanaman='$jenis' ORDER BY bulan";
+			foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
+				extract($value);
+				$data[$no+=1]=$ket;
+			}
+
+			return $data;
 		}
 
-		return $data;
-	}
+		function ketersediaan($mysqli){
+			$data=array();
+			$no=0;
+			$sql="SELECT qintake from tb_ketersedian_air ORDER BY id";
+			foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
+				extract($value);
+				$data[$no+=1]=$qintake;
+			}
 
-	function ketersediaan($mysqli){
-		$data=array();
-		$no=0;
-		$sql="SELECT qintake from tb_ketersedian_air ORDER BY id";
-		foreach (_dataGetAll($mysqli,$sql) as $key => $value) {
-			extract($value);
-			$data[$no+=1]=$qintake;
+			return $data;
 		}
 
-		return $data;
-	}
+		function  simpan($mysqli,$idtanaman,$bulan,$nilai,$golongan,$ket){
+			$stmt = $mysqli->prepare("INSERT INTO tb_rekap_analisis 
+				(idtanaman,bulan,nilai,idgolongan,ket) 
+				VALUES (?,?,?,?,?)");
 
-	function  simpan($mysqli,$idtanaman,$bulan,$nilai,$golongan,$ket){
-		$stmt = $mysqli->prepare("INSERT INTO tb_rekap_analisis 
-			(idtanaman,bulan,nilai,idgolongan,ket) 
-			VALUES (?,?,?,?,?)");
+			$stmt->bind_param("sssss", 
+				$idtanaman,
+				$bulan,
+				$nilai,
+				$golongan,
+				$ket);	
 
-		$stmt->bind_param("sssss", 
-			$idtanaman,
-			$bulan,
-			$nilai,
-			$golongan,
-			$ket);	
+			$stmt->execute();
+		}
 
-		$stmt->execute();
-	}
+		function  hapus($mysqli,$idtanaman){
+			$stmt = $mysqli->prepare("DELETE FROM tb_rekap_analisis where idtanaman=?");
+			$stmt->bind_param("s",$idtanaman); 
+			$stmt->execute();
+		}
 
-	function  hapus($mysqli,$idtanaman){
-		$stmt = $mysqli->prepare("DELETE FROM tb_rekap_analisis where idtanaman=?");
-		$stmt->bind_param("s",$idtanaman); 
-		$stmt->execute();
-	}
-
-	function warna($data){
-		if($data=="mt1")
-			return "<span class='badge badge-primary'>MT1</span>";
-		if($data=="mt2")
-			return "<span class='badge badge-success'>MT2</span>";
-		else
-			return "<span class='badge badge-warning'>MT3</span>";
-	}
+		function warna($data){
+			if($data=="mt1")
+				return "<span class='badge badge-primary'>MT1</span>";
+			if($data=="mt2")
+				return "<span class='badge badge-success'>MT2</span>";
+			else
+				return "<span class='badge badge-warning'>MT3</span>";
+		}
 
 
-	function tambah($mysqli,$bulan,$kebutuhan,$ketersediaan){
-		mysqli_query($mysqli,"insert into tb_grafik (bulan,total_kebutuhan,total_ketersediaan) values ('$bulan','$kebutuhan','$ketersediaan')");
-	}
-	?>
+		function tambah($mysqli,$bulan,$kebutuhan,$ketersediaan){
+			mysqli_query($mysqli,"insert into tb_grafik (bulan,total_kebutuhan,total_ketersediaan) values ('$bulan','$kebutuhan','$ketersediaan')");
+		}
+		?>
